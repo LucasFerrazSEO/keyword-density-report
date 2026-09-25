@@ -1,42 +1,68 @@
-# keyword-density-report — ferramenta grátis e de código aberto de densidade de palavra-chave em pt-BR
+**English** · [Português (Brasil)](README.pt-BR.md)
 
-`keyword-density-report` é uma ferramenta gratuita e de código aberto que
-mede densidade e cobertura de uma palavra-chave em um texto pt-BR, e lista
-os bigramas e trigramas mais frequentes (tirando stopwords) para ver do
-que o texto realmente fala, além da keyword que você tinha em mente.
+# keyword-density-report
 
-## Como funciona
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)
 
-**Densidade da keyword.** Para termos curtos (até 3 palavras), conta
-ocorrência da frase exata dividida pelo total de palavras. Para termos
-longos (4 palavras ou mais), usa cobertura por palavras — ocorrências
-multiplicadas pelo número de termos da keyword, dividido pelo total —
-porque uma frase longa exata é rara de se repetir literalmente, mas a
-combinação de termos pode estar coberta de outros jeitos.
+`keyword-density-report` is a free, open source command-line tool that
+measures the density and coverage of a keyword in a Brazilian Portuguese
+text. It also lists the most frequent bigrams and trigrams (stopwords
+removed), so you can see what the text is actually about beyond the
+keyword you had in mind. It runs locally with the Python standard library
+only.
 
-**Bigramas e trigramas.** Conta as combinações de 2 e 3 palavras mais
-frequentes no texto, descartando qualquer n-grama que contenha stopword em
-pt-BR, para não poluir o resultado com "de um", "para a" e afins.
+The stopword list is specific to Brazilian Portuguese (pt-BR). On texts in
+other languages, the n-gram lists will include function words that should
+have been filtered out.
 
-## Instalação
+## Contents
 
-Só biblioteca padrão do Python (3.9 ou mais recente). Sem dependência
-externa.
+- [How it works](#how-it-works)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [FAQ](#faq)
+- [Limitations](#limitations)
+- [Methodology](#methodology)
+- [Contributing](#contributing)
+- [Author](#author)
+- [License](#license)
+
+## How it works
+
+**Keyword density.** For short terms (up to 3 words), it counts
+occurrences of the exact phrase and divides by the total word count. For
+long terms (4 words or more), it uses word coverage: exact-phrase
+occurrences multiplied by the number of words in the keyword, divided by
+the total word count. Densities above 2% get a warning in the report.
+
+**Bigrams and trigrams.** It counts the most frequent 2-word and 3-word
+combinations in the text and discards any n-gram that contains a pt-BR
+stopword, so results are not cluttered with pairs like "de um" or
+"para a".
+
+## Requirements
+
+Python 3.9 or newer. Standard library only, no external dependencies.
+
+## Installation
 
 ```bash
-git clone https://github.com/lucasferrazseo/keyword-density-report.git
+git clone https://github.com/LucasFerrazSEO/keyword-density-report.git
 cd keyword-density-report
 ```
 
-## Como usar, passo a passo
+## Usage
 
-**1. Passe o texto e a keyword-alvo.**
+The tool prints its report in Brazilian Portuguese.
+
+**1. Pass the text file and the target keyword.**
 
 ```bash
 python keyword_density_report.py texto.txt --kw "consultoria de seo"
 ```
 
-**2. Leia o relatório.** Exemplo real de saída:
+**2. Read the report.** Real sample output:
 
 ```
 === keyword-density-report ===
@@ -57,53 +83,55 @@ Keyword "schema markup" (frase exata): 1 ocorrência(s), densidade 1.33%
      ...
 ```
 
-**3. Ajuste quantos n-gramas mostrar** (padrão: 10):
+**3. Set how many n-grams to show** (default: 10):
 
 ```bash
 python keyword_density_report.py texto.txt --kw "seo" --top 15
 ```
 
-**4. Passe texto direto pelo pipe**, sem salvar arquivo antes:
+**4. Pipe text in directly**, without saving a file first:
 
 ```bash
 cat texto.txt | python keyword_density_report.py - --kw "seo para ia"
 ```
 
-**5. Rode sem `--kw`**, se só quiser ver os n-gramas mais frequentes, sem
-calcular densidade de nenhuma keyword específica.
+**5. Run without `--kw`** if you only want the most frequent n-grams and
+no density calculation for a specific keyword.
 
-## Perguntas frequentes
+## FAQ
 
-**keyword-density-report é realmente grátis?**
-Sim, código aberto sob licença MIT.
+**Is keyword-density-report really free?**
+Yes. It is open source under the MIT license.
 
-**Qual é a densidade ideal de keyword?**
-Não existe um número mágico oficial. Densidade acima de 2-3% costuma
-indicar texto forçado — trate como sinal de repetição mecânica a evitar,
-não como meta a perseguir.
+**What is the ideal keyword density?**
+There is no official magic number. Density above 2 to 3% usually points to
+forced text. Treat it as a sign of mechanical repetition to avoid, not as
+a target to chase.
 
-**A ferramenta funciona em inglês?**
-A lista de stopwords é específica de português brasileiro; em outro
-idioma, os bigramas/trigramas vão incluir palavras funcionais que
-deveriam ser descartadas.
+**Does the tool work in English?**
+The stopword list is specific to Brazilian Portuguese. In other languages,
+the bigrams and trigrams will include function words that should have been
+discarded.
 
-## Limitações
+## Limitations
 
-Densidade de keyword é, na melhor das hipóteses, um sinal fraco de
-relevância — motores de busca modernos não rankeiam por essa métrica
-isolada, e forçar uma densidade-alvo tende a produzir texto pior, não
-melhor.
+Keyword density is, at best, a weak relevance signal. Modern search
+engines do not rank on this metric alone, and forcing a target density
+tends to produce worse text, not better.
 
-## Método e origem
+## Methodology
 
-Generalização do critério de densidade usado no processo editorial de
-[lucasferrazseo.com](https://lucasferrazseo.com).
+A generalization of the density criterion used in the editorial process
+of [lucasferrazseo.com](https://lucasferrazseo.com).
 
-## Autor
+## Contributing
 
-[Lucas Ferraz](https://lucasferraz.com) — especialista em SEO, criação de
-sites e SEO para IA, fundador da [Lucas Ferraz SEO](https://lucasferrazseo.com).
+Bug reports and suggestions are welcome through [GitHub Issues](https://github.com/LucasFerrazSEO/keyword-density-report/issues).
 
-## Licença
+## Author
 
-MIT — ver [LICENSE](LICENSE).
+[Lucas Ferraz](https://lucasferraz.com) is an SEO, website development and Generative Engine Optimization specialist and the founder of [Lucas Ferraz SEO](https://lucasferrazseo.com).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
